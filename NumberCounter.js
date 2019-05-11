@@ -7,8 +7,6 @@ function NumberCounter(start, finish, step, dir, fix, speed, selector, delay) {
   speed = speed || 1000;
   delay = delay || 1000;
 
-  console.log(finish);
-
   function Timeout(fn, delay) {
     let id = setTimeout(fn, delay);
 
