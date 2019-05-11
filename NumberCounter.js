@@ -4,35 +4,35 @@ function NumberCounter(start, finish, step, dir, fix, speed, selector, delay) {
   step = step || 1;
   dir = dir || 0;
   fix = fix || 0;
-  speed = speed || 1000;  
+  speed = speed || 1000;
   delay = delay || 1000;
-  
+
   console.log(finish);
-  
+
   function Timeout(fn, delay) {
     let id = setTimeout(fn, delay);
-    
+
     this.cleared = false;
-    
+
     this.clear = function() {
       this.cleared = true;
-      
+
       clearTimeout(id);
     };
   }
-  
+
   function Interval(fn, interval) {
     let id = setInterval(fn, interval);
-    
+
     this.cleared = false;
-    
+
     this.clear = function() {
       this.cleared = true;
-      
+
       clearInterval(id);
     };
   }
-  
+
   function makeCounter(start, step, dir, fix) {
     var count = (dir == -1) ? start+step : start-step;
 
@@ -41,27 +41,27 @@ function NumberCounter(start, finish, step, dir, fix, speed, selector, delay) {
         count -= step;
       } else {
         count += step;
-      }      
-      
+      }
+
       return count.toFixed(fix);
     };
   }
-  
+
   let elem = selector != '' ? (document.querySelector(selector) || undefined) : undefined,
       counter = makeCounter(start, step, dir, fix),
       sTimeout = undefined,
       sInterval = undefined;
-  
+
   function counterInit() {
     sTimeout = new Timeout(function() {
       sInterval = new Interval(function() {
         let count = counter();
 
-        if ((dir == -1 && count <= finish) || (dir != -1 && count >= finish)) {          
+        if ((dir == -1 && count <= finish) || (dir != -1 && count >= finish)) {
           sInterval.clear();
           count = finish;
         }
-        
+
         if (elem) elem.innerText = count;
         else console.log(count);
       }, speed);
@@ -69,11 +69,11 @@ function NumberCounter(start, finish, step, dir, fix, speed, selector, delay) {
       sTimeout.clear();
     }, delay);
   }
-  
-  function init() {    
+
+  function init() {
     if (elem) {
       let elemHeight = elem.offsetHeight,
-          elemPos = elem.offsetTop + elemHeight;    
+          elemPos = elem.offsetTop + elemHeight;
 
       document.addEventListener('scroll', function() {
         let scrollPos = window.pageYOffset || document.documentElement.scrollTop,
@@ -84,13 +84,13 @@ function NumberCounter(start, finish, step, dir, fix, speed, selector, delay) {
               document.body.clientHeight, clientHeight
             ),
             scrolled = scrollPos+clientHeight;
-        
+
         if (sTimeout === undefined && sInterval === undefined && scrolled >= elemPos) counterInit();
       });
     } else {
       counterInit();
     }
   }
-  
+
   init();
 };
