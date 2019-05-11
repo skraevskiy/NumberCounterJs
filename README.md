@@ -28,3 +28,5 @@ Counter digits when scrolling the page.
       counter9 = new NumberCounter(0, 5, 1, 1, 0, 100, 0, 0),
       counter10 = new NumberCounter(0, 22, 1, 1, 0, 100, '.counter-10', 0);
 </script></pre>
+
+<b>Example on codepen.io:</b> https://codepen.io/skraevskiy/pen/PvNmGq
